@@ -3,6 +3,7 @@ import 'package:flame/input.dart';
 import 'package:flame/src/extensions/size.dart';
 import 'package:flame/src/game/game_render_box.dart';
 import 'package:flame/src/game/game_widget/gestures.dart';
+import 'package:flame_test/main.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -274,6 +275,8 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
         color: widget.game.backgroundColor(),
         child: LayoutBuilder(
           builder: (_, BoxConstraints constraints) {
+            (widget.game as MyGame).text +=
+                "LayoutBuilder occurred\n\t${constraints.biggest}\n";
             widget.game.onGameResize(constraints.biggest.toVector2());
             return FutureBuilder(
               future: loaderFuture,

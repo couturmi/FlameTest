@@ -22,7 +22,7 @@ class MyGame extends FlameGame {
 main() {
   final myGame = MyGame();
   runApp(
-    GameWidgetFake(
+    GameWidgetFake<MyGame>(
       game: myGame,
       autofocus: false,
     ),

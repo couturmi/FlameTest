@@ -14,6 +14,12 @@ class MyGame extends FlameGameFake {
     add(textComponent);
   }
 
+  @override
+  void onMount() {
+    updateText("onMount occurred\n");
+    super.onMount();
+  }
+
   void updateText(String newText) {
     text += newText;
     textComponent.text = text;

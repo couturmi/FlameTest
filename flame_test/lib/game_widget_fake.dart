@@ -71,44 +71,6 @@ class GameWidgetFake<T extends Game> extends StatefulWidget {
   /// mouse cursor can be changed in runtime using [Game.mouseCursor]
   final MouseCursor? mouseCursor;
 
-  /// Renders a [game] in a flutter widget tree.
-  ///
-  /// Ex:
-  /// ```
-  /// ...
-  /// Widget build(BuildContext  context) {
-  ///   return GameWidget(
-  ///     game: MyGameClass(),
-  ///   )
-  /// }
-  /// ...
-  /// ```
-  ///
-  /// It is also possible to render layers of widgets over the game surface with
-  /// widget subtrees.
-  ///
-  /// To do that a [overlayBuilderMap] should be provided. The visibility of
-  /// these overlays are controlled by [Game.overlays] property
-  ///
-  /// Ex:
-  /// ```
-  /// ...
-  ///
-  /// final game = MyGame();
-  ///
-  /// Widget build(BuildContext  context) {
-  ///   return GameWidget(
-  ///     game: game,
-  ///     overlayBuilderMap: {
-  ///       'PauseMenu': (ctx, game) {
-  ///         return Text('A pause menu');
-  ///       },
-  ///     },
-  ///   )
-  /// }
-  /// ...
-  /// game.overlays.add('PauseMenu');
-  /// ```
   const GameWidgetFake({
     Key? key,
     required this.game,
@@ -304,37 +266,37 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
       focusNode: _focusNode,
       autofocus: widget.autofocus,
       onKey: _handleKeyEvent,
-      child: MouseRegion(
-        cursor: _mouseCursor ?? MouseCursor.defer,
-        child: Directionality(
-          textDirection: textDir,
-          child: Container(
-            color: widget.game.backgroundColor(),
-            child: LayoutBuilder(
-              builder: (_, BoxConstraints constraints) {
-                widget.game.onGameResize(constraints.biggest.toVector2());
-                return FutureBuilder(
-                  future: loaderFuture,
-                  builder: (_, snapshot) {
-                    if (snapshot.hasError) {
-                      final errorBuilder = widget.errorBuilder;
-                      if (errorBuilder == null) {
-                        throw snapshot.error!;
-                      } else {
-                        return errorBuilder(context, snapshot.error!);
-                      }
+      // child: MouseRegion(
+      //   cursor: _mouseCursor ?? MouseCursor.defer,
+      child: Directionality(
+        textDirection: textDir,
+        child: Container(
+          color: widget.game.backgroundColor(),
+          child: LayoutBuilder(
+            builder: (_, BoxConstraints constraints) {
+              widget.game.onGameResize(constraints.biggest.toVector2());
+              return FutureBuilder(
+                future: loaderFuture,
+                builder: (_, snapshot) {
+                  if (snapshot.hasError) {
+                    final errorBuilder = widget.errorBuilder;
+                    if (errorBuilder == null) {
+                      throw snapshot.error!;
+                    } else {
+                      return errorBuilder(context, snapshot.error!);
                     }
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return Stack(children: stackedWidgets);
-                    }
-                    return widget.loadingBuilder?.call(context) ?? Container();
-                  },
-                );
-              },
-            ),
+                  }
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Stack(children: stackedWidgets);
+                  }
+                  return widget.loadingBuilder?.call(context) ?? Container();
+                },
+              );
+            },
           ),
         ),
       ),
+      // ),
     );
   }
 

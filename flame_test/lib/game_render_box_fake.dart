@@ -50,16 +50,18 @@ class GameRenderBoxFake extends RenderBox with WidgetsBindingObserver {
   @override
   void detach() {
     super.detach();
-    game.detach();
-    gameLoop?.dispose();
-    gameLoop = null;
-    _unbindLifecycleListener();
+    // game.detach();
+    // gameLoop?.dispose();
+    // gameLoop = null;
+    // _unbindLifecycleListener();
   }
 
   void gameLoopCallback(double dt) {
     if (!attached) {
       return;
     }
+    (game as MyGame).text +=
+        "GameRenderBox.gameLoopCallback occurred\n\t${constraints.biggest}\n";
     game.update(dt);
     markNeedsPaint();
   }

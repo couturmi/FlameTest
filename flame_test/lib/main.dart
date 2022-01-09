@@ -1,9 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flame_test/flame_game_fake.dart';
 import 'package:flame_test/game_widget_fake.dart';
 import 'package:flutter/material.dart';
 
-class MyGame extends FlameGame {
+class MyGame extends FlameGameFake {
   String text = "";
   @override
   Future<void> onLoad() async {

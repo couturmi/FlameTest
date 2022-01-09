@@ -3,6 +3,8 @@ import 'package:flame/input.dart';
 import 'package:flame/src/extensions/size.dart';
 import 'package:flame/src/game/game_render_box.dart';
 import 'package:flame/src/game/game_widget/gestures.dart';
+import 'package:flame_test/game_fake.dart';
+import 'package:flame_test/game_render_box_fake.dart';
 import 'package:flame_test/main.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -16,14 +18,14 @@ typedef GameErrorWidgetBuilder = Widget Function(
   Object error,
 );
 
-typedef OverlayWidgetBuilder<T extends Game> = Widget Function(
+typedef OverlayWidgetBuilder<T extends GameFake> = Widget Function(
   BuildContext context,
   T game,
 );
 
 /// A [StatefulWidget] that is in charge of attaching a [Game] instance into the
 /// Flutter tree.
-class GameWidgetFake<T extends Game> extends StatefulWidget {
+class GameWidgetFake<T extends GameFake> extends StatefulWidget {
   /// The game instance in which this widget will render
   final T game;
 
@@ -93,7 +95,7 @@ class GameWidgetFake<T extends Game> extends StatefulWidget {
   _GameWidgetFakeState<T> createState() => _GameWidgetFakeState<T>();
 }
 
-class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
+class _GameWidgetFakeState<T extends GameFake> extends State<GameWidgetFake<T>> {
   Future<void> get loaderFuture => _loaderFuture ??= (() {
         final onLoad = widget.game.onLoadCache;
         final onMount = widget.game.onMount;
@@ -143,17 +145,18 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
 }
 
 class _GameRenderObjectWidget extends LeafRenderObjectWidget {
-  final Game game;
+  final GameFake game;
 
   const _GameRenderObjectWidget(this.game);
 
   @override
   RenderBox createRenderObject(BuildContext context) {
-    return GameRenderBox(context, game);
+    return GameRenderBoxFake(context, game);
   }
 
   @override
-  void updateRenderObject(BuildContext context, GameRenderBox renderObject) {
+  void updateRenderObject(
+      BuildContext context, GameRenderBoxFake renderObject) {
     renderObject.game = game;
   }
 }

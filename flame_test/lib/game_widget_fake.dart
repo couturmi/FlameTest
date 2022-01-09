@@ -262,42 +262,42 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
     // We can use Directionality.maybeOf when that method lands on stable
     final textDir = widget.textDirection ?? TextDirection.ltr;
 
-    return Focus(
-      focusNode: _focusNode,
-      autofocus: widget.autofocus,
-      onKey: _handleKeyEvent,
-      // child: MouseRegion(
-      //   cursor: _mouseCursor ?? MouseCursor.defer,
-      child: Directionality(
-        textDirection: textDir,
-        child: Container(
-          color: widget.game.backgroundColor(),
-          child: LayoutBuilder(
-            builder: (_, BoxConstraints constraints) {
-              widget.game.onGameResize(constraints.biggest.toVector2());
-              return FutureBuilder(
-                future: loaderFuture,
-                builder: (_, snapshot) {
-                  if (snapshot.hasError) {
-                    final errorBuilder = widget.errorBuilder;
-                    if (errorBuilder == null) {
-                      throw snapshot.error!;
-                    } else {
-                      return errorBuilder(context, snapshot.error!);
-                    }
+    // return Focus(
+    //   focusNode: _focusNode,
+    //   autofocus: widget.autofocus,
+    //   onKey: _handleKeyEvent,
+    // child: MouseRegion(
+    //   cursor: _mouseCursor ?? MouseCursor.defer,
+    return Directionality(
+      textDirection: textDir,
+      child: Container(
+        color: widget.game.backgroundColor(),
+        child: LayoutBuilder(
+          builder: (_, BoxConstraints constraints) {
+            widget.game.onGameResize(constraints.biggest.toVector2());
+            return FutureBuilder(
+              future: loaderFuture,
+              builder: (_, snapshot) {
+                if (snapshot.hasError) {
+                  final errorBuilder = widget.errorBuilder;
+                  if (errorBuilder == null) {
+                    throw snapshot.error!;
+                  } else {
+                    return errorBuilder(context, snapshot.error!);
                   }
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return Stack(children: stackedWidgets);
-                  }
-                  return widget.loadingBuilder?.call(context) ?? Container();
-                },
-              );
-            },
-          ),
+                }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Stack(children: stackedWidgets);
+                }
+                return widget.loadingBuilder?.call(context) ?? Container();
+              },
+            );
+          },
         ),
       ),
-      // ),
     );
+    // ),
+    // );
   }
 
   List<Widget> _addBackground(BuildContext context, List<Widget> stackWidgets) {

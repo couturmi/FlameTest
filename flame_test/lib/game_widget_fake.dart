@@ -184,19 +184,19 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
   void didUpdateWidget(GameWidgetFake<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.game != widget.game) {
-      removeOverlaysListener(oldWidget.game);
-
-      // Reset the overlays
-      _initActiveOverlays();
-      addOverlaysListener();
-
-      // Reset mouse cursor
-      _initMouseCursor();
-      addMouseCursorListener();
-
-      // Reset the loaderFuture so that onMount will run again (onLoad is still cached).
-      oldWidget.game.onRemove();
-      _loaderFuture = null;
+      // removeOverlaysListener(oldWidget.game);
+      //
+      // // Reset the overlays
+      // _initActiveOverlays();
+      // addOverlaysListener();
+      //
+      // // Reset mouse cursor
+      // _initMouseCursor();
+      // addMouseCursorListener();
+      //
+      // // Reset the loaderFuture so that onMount will run again (onLoad is still cached).
+      // oldWidget.game.onRemove();
+      // _loaderFuture = null;
     }
   }
 

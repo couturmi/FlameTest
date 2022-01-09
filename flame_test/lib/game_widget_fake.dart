@@ -95,7 +95,8 @@ class GameWidgetFake<T extends GameFake> extends StatefulWidget {
   _GameWidgetFakeState<T> createState() => _GameWidgetFakeState<T>();
 }
 
-class _GameWidgetFakeState<T extends GameFake> extends State<GameWidgetFake<T>> {
+class _GameWidgetFakeState<T extends GameFake>
+    extends State<GameWidgetFake<T>> {
   Future<void> get loaderFuture => _loaderFuture ??= (() {
         final onLoad = widget.game.onLoadCache;
         final onMount = widget.game.onMount;
@@ -115,8 +116,8 @@ class _GameWidgetFakeState<T extends GameFake> extends State<GameWidgetFake<T>> 
       textDirection: textDir,
       child: LayoutBuilder(
         builder: (_, BoxConstraints constraints) {
-          (widget.game as MyGame).text +=
-              "LayoutBuilder occurred\n\t${constraints.biggest}\n";
+          (widget.game as MyGame)
+              .updateText("LayoutBuilder occurred\n\t${constraints.biggest}\n");
           widget.game.onGameResize(constraints.biggest.toVector2());
           return FutureBuilder(
             future: loaderFuture,

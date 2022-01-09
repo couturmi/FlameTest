@@ -1,21 +1,27 @@
 import 'package:flame/components.dart';
-import 'package:flame/game.dart';
 import 'package:flame_test/flame_game_fake.dart';
 import 'package:flame_test/game_widget_fake.dart';
 import 'package:flutter/material.dart';
 
 class MyGame extends FlameGameFake {
   String text = "";
+  TextComponent textComponent =
+      TextComponent(text: "", position: Vector2(50, 50));
   @override
   Future<void> onLoad() async {
-    text += "onLoad occurred\n";
+    updateText("onLoad occurred\n");
     await super.onLoad();
-    add(TextComponent(text: text, position: Vector2(50, 50)));
+    add(textComponent);
+  }
+
+  void updateText(String newText) {
+    text += newText;
+    textComponent.text = text;
   }
 
   @override
   void onGameResize(Vector2 canvasSize) {
-    text += "onGameResize occurred\n\tCanvas Size: $canvasSize\n";
+    updateText("onGameResize occurred\n\tCanvas Size: $canvasSize\n");
     super.onGameResize(canvasSize);
   }
 }

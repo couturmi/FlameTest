@@ -25,8 +25,8 @@ class GameRenderBoxFake extends RenderBox with WidgetsBindingObserver {
   @override
   void performResize() {
     super.performResize();
-    (game as MyGame).text +=
-        "GameRenderBox.performResize occurred\n\t${constraints.biggest}\n";
+    (game as MyGame).updateText(
+        "GameRenderBox.performResize occurred\n\t${constraints.biggest}\n");
     game.onGameResize(constraints.biggest.toVector2());
   }
 
@@ -60,16 +60,14 @@ class GameRenderBoxFake extends RenderBox with WidgetsBindingObserver {
     if (!attached) {
       return;
     }
-    (game as MyGame).text +=
-        "GameRenderBox.gameLoopCallback occurred\n\t${constraints.biggest}\n";
     game.update(dt);
     markNeedsPaint();
   }
 
   @override
   void performLayout() {
-    (game as MyGame).text +=
-        "GameRenderBox.performLayout occurred\n\t${constraints.biggest}\n";
+    (game as MyGame).updateText(
+        "GameRenderBox.performLayout occurred\n\t${constraints.biggest}\n");
     size = constraints.biggest;
   }
 
@@ -95,5 +93,9 @@ class GameRenderBoxFake extends RenderBox with WidgetsBindingObserver {
   }
 
   @override
-  Size computeDryLayout(BoxConstraints constraints) => constraints.biggest;
+  Size computeDryLayout(BoxConstraints constraints) {
+    (game as MyGame).updateText(
+        "GameRenderBox.computeDryLayout occurred\n\t${constraints.biggest}\n");
+    return constraints.biggest;
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame_test/game_fake.dart';
+import 'package:flame_test/main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/widgets.dart' hide WidgetBuilder;
 
 import 'package:flame/src/extensions/size.dart';
 import 'package:flame/src/game/game_loop.dart';
-import 'package:flame/src/game/mixins/game.dart';
 
 class GameRenderBoxFake extends RenderBox with WidgetsBindingObserver {
   BuildContext buildContext;
@@ -25,6 +25,8 @@ class GameRenderBoxFake extends RenderBox with WidgetsBindingObserver {
   @override
   void performResize() {
     super.performResize();
+    (game as MyGame).text +=
+        "GameRenderBox.performResize occurred\n\t${constraints.biggest}\n";
     game.onGameResize(constraints.biggest.toVector2());
   }
 
@@ -64,6 +66,8 @@ class GameRenderBoxFake extends RenderBox with WidgetsBindingObserver {
 
   @override
   void performLayout() {
+    (game as MyGame).text +=
+        "GameRenderBox.performLayout occurred\n\t${constraints.biggest}\n";
     size = constraints.biggest;
   }
 

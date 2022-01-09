@@ -180,37 +180,37 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
     });
   }
 
-  @override
-  void didUpdateWidget(GameWidgetFake<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.game != widget.game) {
-      // removeOverlaysListener(oldWidget.game);
-      //
-      // // Reset the overlays
-      // _initActiveOverlays();
-      // addOverlaysListener();
-      //
-      // // Reset mouse cursor
-      // _initMouseCursor();
-      // addMouseCursorListener();
-      //
-      // // Reset the loaderFuture so that onMount will run again (onLoad is still cached).
-      // oldWidget.game.onRemove();
-      // _loaderFuture = null;
-    }
-  }
+  // @override
+  // void didUpdateWidget(GameWidgetFake<T> oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   if (oldWidget.game != widget.game) {
+  // removeOverlaysListener(oldWidget.game);
+  //
+  // // Reset the overlays
+  // _initActiveOverlays();
+  // addOverlaysListener();
+  //
+  // // Reset mouse cursor
+  // _initMouseCursor();
+  // addMouseCursorListener();
+  //
+  // // Reset the loaderFuture so that onMount will run again (onLoad is still cached).
+  // oldWidget.game.onRemove();
+  // _loaderFuture = null;
+  //   }
+  // }
 
-  @override
-  void dispose() {
-    super.dispose();
-    widget.game.onRemove();
-    removeOverlaysListener(widget.game);
-    // If we received a focus node from the user, they are responsible
-    // for disposing it
-    if (widget.focusNode == null) {
-      _focusNode.dispose();
-    }
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // widget.game.onRemove();
+  // removeOverlaysListener(widget.game);
+  // // If we received a focus node from the user, they are responsible
+  // // for disposing it
+  // if (widget.focusNode == null) {
+  //   _focusNode.dispose();
+  // }
+  // }
 
   void addMouseCursorListener() {
     widget.game.mouseCursor.addListener(onChangeMouseCursor);

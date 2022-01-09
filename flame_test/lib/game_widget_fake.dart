@@ -107,41 +107,41 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
   Future<void>? _loaderFuture;
 
   late FocusNode _focusNode;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Add the initial overlays
-    _initActiveOverlays();
-    addOverlaysListener();
-
-    // Add the initial mouse cursor
-    _initMouseCursor();
-    addMouseCursorListener();
-
-    _focusNode = widget.focusNode ?? FocusNode();
-    if (widget.autofocus) {
-      _focusNode.requestFocus();
-    }
-  }
-
-  void _initMouseCursor() {
-    if (widget.mouseCursor != null) {
-      widget.game.mouseCursor.value = widget.mouseCursor;
-      _mouseCursor = widget.game.mouseCursor.value;
-    }
-  }
-
-  void _initActiveOverlays() {
-    if (widget.initialActiveOverlays == null) {
-      return;
-    }
-    _checkOverlays(widget.initialActiveOverlays!.toSet());
-    widget.initialActiveOverlays!.forEach((key) {
-      widget.game.overlays.add(key);
-    });
-  }
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   // Add the initial overlays
+  //   _initActiveOverlays();
+  //   addOverlaysListener();
+  //
+  //   // Add the initial mouse cursor
+  //   _initMouseCursor();
+  //   addMouseCursorListener();
+  //
+  //   _focusNode = widget.focusNode ?? FocusNode();
+  //   if (widget.autofocus) {
+  //     _focusNode.requestFocus();
+  //   }
+  // }
+  //
+  // void _initMouseCursor() {
+  //   if (widget.mouseCursor != null) {
+  //     widget.game.mouseCursor.value = widget.mouseCursor;
+  //     _mouseCursor = widget.game.mouseCursor.value;
+  //   }
+  // }
+  //
+  // void _initActiveOverlays() {
+  //   if (widget.initialActiveOverlays == null) {
+  //     return;
+  //   }
+  //   _checkOverlays(widget.initialActiveOverlays!.toSet());
+  //   widget.initialActiveOverlays!.forEach((key) {
+  //     widget.game.overlays.add(key);
+  //   });
+  // }
 
   // @override
   // void didUpdateWidget(GameWidgetFake<T> oldWidget) {
@@ -175,90 +175,90 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
   // }
   // }
 
-  void addMouseCursorListener() {
-    widget.game.mouseCursor.addListener(onChangeMouseCursor);
-  }
-
-  void onChangeMouseCursor() {
-    setState(() {
-      _mouseCursor = widget.game.mouseCursor.value;
-    });
-  }
+  // void addMouseCursorListener() {
+  //   widget.game.mouseCursor.addListener(onChangeMouseCursor);
+  // }
+  //
+  // void onChangeMouseCursor() {
+  //   setState(() {
+  //     _mouseCursor = widget.game.mouseCursor.value;
+  //   });
+  // }
 
   //#region Widget overlay methods
-
-  void addOverlaysListener() {
-    widget.game.overlays.addListener(onChangeActiveOverlays);
-    initialActiveOverlays = widget.game.overlays.value;
-  }
-
-  void removeOverlaysListener(T game) {
-    game.overlays.removeListener(onChangeActiveOverlays);
-  }
-
-  void _checkOverlays(Set<String> overlays) {
-    overlays.forEach((overlayKey) {
-      assert(
-        widget.overlayBuilderMap?.containsKey(overlayKey) ?? false,
-        'A non mapped overlay has been added: $overlayKey',
-      );
-    });
-  }
-
-  void onChangeActiveOverlays() {
-    _checkOverlays(widget.game.overlays.value);
-    setState(() {
-      initialActiveOverlays = widget.game.overlays.value;
-    });
-  }
+  //
+  // void addOverlaysListener() {
+  //   widget.game.overlays.addListener(onChangeActiveOverlays);
+  //   initialActiveOverlays = widget.game.overlays.value;
+  // }
+  //
+  // void removeOverlaysListener(T game) {
+  //   game.overlays.removeListener(onChangeActiveOverlays);
+  // }
+  //
+  // void _checkOverlays(Set<String> overlays) {
+  //   overlays.forEach((overlayKey) {
+  //     assert(
+  //       widget.overlayBuilderMap?.containsKey(overlayKey) ?? false,
+  //       'A non mapped overlay has been added: $overlayKey',
+  //     );
+  //   });
+  // }
+  //
+  // void onChangeActiveOverlays() {
+  //   _checkOverlays(widget.game.overlays.value);
+  //   setState(() {
+  //     initialActiveOverlays = widget.game.overlays.value;
+  //   });
+  // }
 
   //#endregion
 
-  KeyEventResult _handleKeyEvent(FocusNode focusNode, RawKeyEvent event) {
-    final game = widget.game;
-    if (game is KeyboardEvents) {
-      return game.onKeyEvent(event, RawKeyboard.instance.keysPressed);
-    }
-    return KeyEventResult.handled;
-  }
+  // KeyEventResult _handleKeyEvent(FocusNode focusNode, RawKeyEvent event) {
+  //   final game = widget.game;
+  //   if (game is KeyboardEvents) {
+  //     return game.onKeyEvent(event, RawKeyboard.instance.keysPressed);
+  //   }
+  //   return KeyEventResult.handled;
+  // }
 
   @override
   Widget build(BuildContext context) {
     Widget internalGameWidget = _GameRenderObjectWidget(widget.game);
 
-    final hasBasicDetectors = hasBasicGestureDetectors(widget.game);
-    final hasAdvancedDetectors = hasAdvancedGesturesDetectors(widget.game);
+    // final hasBasicDetectors = hasBasicGestureDetectors(widget.game);
+    // final hasAdvancedDetectors = hasAdvancedGesturesDetectors(widget.game);
+    //
+    // assert(
+    //   !(hasBasicDetectors && hasAdvancedDetectors),
+    //   '''
+    //     WARNING: Both Advanced and Basic detectors detected.
+    //     Advanced detectors will override basic detectors and the later will not receive events
+    //   ''',
+    // );
 
-    assert(
-      !(hasBasicDetectors && hasAdvancedDetectors),
-      '''
-        WARNING: Both Advanced and Basic detectors detected.
-        Advanced detectors will override basic detectors and the later will not receive events
-      ''',
-    );
-
-    if (hasBasicDetectors) {
-      internalGameWidget = applyBasicGesturesDetectors(
-        widget.game,
-        internalGameWidget,
-      );
-    } else if (hasAdvancedDetectors) {
-      internalGameWidget = applyAdvancedGesturesDetectors(
-        widget.game,
-        internalGameWidget,
-      );
-    }
-
-    if (hasMouseDetectors(widget.game)) {
-      internalGameWidget = applyMouseDetectors(
-        widget.game,
-        internalGameWidget,
-      );
-    }
+    // if (hasBasicDetectors) {
+    //   internalGameWidget = applyBasicGesturesDetectors(
+    //     widget.game,
+    //     internalGameWidget,
+    //   );
+    // } else if (hasAdvancedDetectors) {
+    //   internalGameWidget = applyAdvancedGesturesDetectors(
+    //     widget.game,
+    //     internalGameWidget,
+    //   );
+    // }
+    //
+    // if (hasMouseDetectors(widget.game)) {
+    //   internalGameWidget = applyMouseDetectors(
+    //     widget.game,
+    //     internalGameWidget,
+    //   );
+    // }
 
     final stackedWidgets = [internalGameWidget];
-    _addBackground(context, stackedWidgets);
-    _addOverlays(context, stackedWidgets);
+    // _addBackground(context, stackedWidgets);
+    // _addOverlays(context, stackedWidgets);
 
     // We can use Directionality.maybeOf when that method lands on stable
     final textDir = widget.textDirection ?? TextDirection.ltr;

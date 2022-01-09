@@ -18,33 +18,54 @@ class MyGame extends FlameGame {
     super.onGameResize(canvasSize);
   }
 }
+//
+// main() {
+//   final myGame = MyGame();
+//   runApp(
+//     GameWidgetFake<MyGame>(
+//       game: myGame,
+//       autofocus: false,
+//     ),
+//   );
+// }
 
-main() {
-  final myGame = MyGame();
-  runApp(
-    GameWidgetFake<MyGame>(
-      game: myGame,
-      autofocus: false,
-    ),
-  );
+void main() {
+  runApp(const MyAppStateful());
 }
 
-// void main() {
-//   runApp(const MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Directionality(
-//       textDirection: TextDirection.ltr,
-//       child: LayoutBuilder(
-//         builder: (_, BoxConstraints constraints) {
-//           return Center(child: Text("Constraints: ${constraints.biggest}"));
-//         },
-//       ),
-//     );
-//   }
-// }
+class MyAppStateful extends StatefulWidget {
+  const MyAppStateful({Key? key}) : super(key: key);
+
+  @override
+  _MyAppStatefulState createState() => _MyAppStatefulState();
+}
+
+class _MyAppStatefulState extends State<MyAppStateful> {
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: LayoutBuilder(
+        builder: (_, BoxConstraints constraints) {
+          return Center(child: Text("Constraints: ${constraints.biggest}"));
+        },
+      ),
+    );
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: LayoutBuilder(
+        builder: (_, BoxConstraints constraints) {
+          return Center(child: Text("Constraints: ${constraints.biggest}"));
+        },
+      ),
+    );
+  }
+}

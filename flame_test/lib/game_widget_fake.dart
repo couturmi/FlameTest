@@ -94,10 +94,6 @@ class GameWidgetFake<T extends Game> extends StatefulWidget {
 }
 
 class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
-  Set<String> initialActiveOverlays = {};
-
-  MouseCursor? _mouseCursor;
-
   Future<void> get loaderFuture => _loaderFuture ??= (() {
         final onLoad = widget.game.onLoadCache;
         final onMount = widget.game.onMount;
@@ -106,169 +102,15 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
 
   Future<void>? _loaderFuture;
 
-  late FocusNode _focusNode;
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //
-  //   // Add the initial overlays
-  //   _initActiveOverlays();
-  //   addOverlaysListener();
-  //
-  //   // Add the initial mouse cursor
-  //   _initMouseCursor();
-  //   addMouseCursorListener();
-  //
-  //   _focusNode = widget.focusNode ?? FocusNode();
-  //   if (widget.autofocus) {
-  //     _focusNode.requestFocus();
-  //   }
-  // }
-  //
-  // void _initMouseCursor() {
-  //   if (widget.mouseCursor != null) {
-  //     widget.game.mouseCursor.value = widget.mouseCursor;
-  //     _mouseCursor = widget.game.mouseCursor.value;
-  //   }
-  // }
-  //
-  // void _initActiveOverlays() {
-  //   if (widget.initialActiveOverlays == null) {
-  //     return;
-  //   }
-  //   _checkOverlays(widget.initialActiveOverlays!.toSet());
-  //   widget.initialActiveOverlays!.forEach((key) {
-  //     widget.game.overlays.add(key);
-  //   });
-  // }
-
-  // @override
-  // void didUpdateWidget(GameWidgetFake<T> oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   if (oldWidget.game != widget.game) {
-  // removeOverlaysListener(oldWidget.game);
-  //
-  // // Reset the overlays
-  // _initActiveOverlays();
-  // addOverlaysListener();
-  //
-  // // Reset mouse cursor
-  // _initMouseCursor();
-  // addMouseCursorListener();
-  //
-  // // Reset the loaderFuture so that onMount will run again (onLoad is still cached).
-  // oldWidget.game.onRemove();
-  // _loaderFuture = null;
-  //   }
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // widget.game.onRemove();
-  // removeOverlaysListener(widget.game);
-  // // If we received a focus node from the user, they are responsible
-  // // for disposing it
-  // if (widget.focusNode == null) {
-  //   _focusNode.dispose();
-  // }
-  // }
-
-  // void addMouseCursorListener() {
-  //   widget.game.mouseCursor.addListener(onChangeMouseCursor);
-  // }
-  //
-  // void onChangeMouseCursor() {
-  //   setState(() {
-  //     _mouseCursor = widget.game.mouseCursor.value;
-  //   });
-  // }
-
-  //#region Widget overlay methods
-  //
-  // void addOverlaysListener() {
-  //   widget.game.overlays.addListener(onChangeActiveOverlays);
-  //   initialActiveOverlays = widget.game.overlays.value;
-  // }
-  //
-  // void removeOverlaysListener(T game) {
-  //   game.overlays.removeListener(onChangeActiveOverlays);
-  // }
-  //
-  // void _checkOverlays(Set<String> overlays) {
-  //   overlays.forEach((overlayKey) {
-  //     assert(
-  //       widget.overlayBuilderMap?.containsKey(overlayKey) ?? false,
-  //       'A non mapped overlay has been added: $overlayKey',
-  //     );
-  //   });
-  // }
-  //
-  // void onChangeActiveOverlays() {
-  //   _checkOverlays(widget.game.overlays.value);
-  //   setState(() {
-  //     initialActiveOverlays = widget.game.overlays.value;
-  //   });
-  // }
-
-  //#endregion
-
-  // KeyEventResult _handleKeyEvent(FocusNode focusNode, RawKeyEvent event) {
-  //   final game = widget.game;
-  //   if (game is KeyboardEvents) {
-  //     return game.onKeyEvent(event, RawKeyboard.instance.keysPressed);
-  //   }
-  //   return KeyEventResult.handled;
-  // }
-
   @override
   Widget build(BuildContext context) {
     Widget internalGameWidget = _GameRenderObjectWidget(widget.game);
 
-    // final hasBasicDetectors = hasBasicGestureDetectors(widget.game);
-    // final hasAdvancedDetectors = hasAdvancedGesturesDetectors(widget.game);
-    //
-    // assert(
-    //   !(hasBasicDetectors && hasAdvancedDetectors),
-    //   '''
-    //     WARNING: Both Advanced and Basic detectors detected.
-    //     Advanced detectors will override basic detectors and the later will not receive events
-    //   ''',
-    // );
-
-    // if (hasBasicDetectors) {
-    //   internalGameWidget = applyBasicGesturesDetectors(
-    //     widget.game,
-    //     internalGameWidget,
-    //   );
-    // } else if (hasAdvancedDetectors) {
-    //   internalGameWidget = applyAdvancedGesturesDetectors(
-    //     widget.game,
-    //     internalGameWidget,
-    //   );
-    // }
-    //
-    // if (hasMouseDetectors(widget.game)) {
-    //   internalGameWidget = applyMouseDetectors(
-    //     widget.game,
-    //     internalGameWidget,
-    //   );
-    // }
-
     final stackedWidgets = [internalGameWidget];
-    // _addBackground(context, stackedWidgets);
-    // _addOverlays(context, stackedWidgets);
 
     // We can use Directionality.maybeOf when that method lands on stable
     final textDir = widget.textDirection ?? TextDirection.ltr;
 
-    // return Focus(
-    //   focusNode: _focusNode,
-    //   autofocus: widget.autofocus,
-    //   onKey: _handleKeyEvent,
-    // child: MouseRegion(
-    //   cursor: _mouseCursor ?? MouseCursor.defer,
     return Directionality(
       textDirection: textDir,
       child: Container(
@@ -290,7 +132,8 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
                   }
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
-                  return Stack(children: stackedWidgets);
+                  // return Stack(children: stackedWidgets);
+                  return Center(child: Text("${constraints.biggest}"));
                 }
                 return widget.loadingBuilder?.call(context) ?? Container();
               },
@@ -301,33 +144,6 @@ class _GameWidgetFakeState<T extends Game> extends State<GameWidgetFake<T>> {
     );
     // ),
     // );
-  }
-
-  List<Widget> _addBackground(BuildContext context, List<Widget> stackWidgets) {
-    if (widget.backgroundBuilder == null) {
-      return stackWidgets;
-    }
-    final backgroundContent = KeyedSubtree(
-      key: ValueKey(widget.game),
-      child: widget.backgroundBuilder!(context),
-    );
-    stackWidgets.insert(0, backgroundContent);
-    return stackWidgets;
-  }
-
-  List<Widget> _addOverlays(BuildContext context, List<Widget> stackWidgets) {
-    if (widget.overlayBuilderMap == null) {
-      return stackWidgets;
-    }
-    final widgets = initialActiveOverlays.map((String overlayKey) {
-      final builder = widget.overlayBuilderMap![overlayKey]!;
-      return KeyedSubtree(
-        key: ValueKey(overlayKey),
-        child: builder(context, widget.game),
-      );
-    });
-    stackWidgets.addAll(widgets);
-    return stackWidgets;
   }
 }
 

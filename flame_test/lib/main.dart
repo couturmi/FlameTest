@@ -1,9 +1,11 @@
 import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 import 'package:flame_test/flame_game_fake.dart';
 import 'package:flame_test/game_widget_fake.dart';
 import 'package:flutter/material.dart';
 
-class MyGame extends FlameGameFake {
+// class MyGame extends FlameGameFake {
+class MyGame extends FlameGame {
   String text = "";
   TextComponent textComponent =
       TextComponent(text: "", position: Vector2(50, 50));
@@ -35,7 +37,8 @@ class MyGame extends FlameGameFake {
 main() {
   final myGame = MyGame();
   runApp(
-    GameWidgetFake<MyGame>(
+    // GameWidgetFake<MyGame>(
+    GameWidget<MyGame>(
       game: myGame,
       autofocus: false,
     ),

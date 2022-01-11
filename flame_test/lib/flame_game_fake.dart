@@ -87,7 +87,8 @@ class FlameGameFake extends Component with GameFake {
     super.update(dt);
     _cameraWrapper.update(dt);
     if (parent == null) {
-      super.updateTree(dt, callOwnUpdate: false);
+      // super.updateTree(dt, callOwnUpdate: false);
+      super.updateTree(dt);
     }
   }
 

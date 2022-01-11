@@ -60,9 +60,11 @@ packages:
   flame:
     dependency: "direct main"
     description:
-      name: flame
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/flame"
+      ref: fix-game-resize
+      resolved-ref: f731a9d18763ad304f44cd0da3449a1f10fc511a
+      url: "https://github.com/mancj/flame.git"
+    source: git
     version: "1.0.0"
   flutter:
     dependency: "direct main"

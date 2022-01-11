@@ -29,7 +29,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: 1.0.0
+  flame: #1.0.0
+    git:
+      url: https://github.com/mancj/flame.git
+      ref: fix-game-resize
+      path: packages/flame/
 
 
   # The following adds the Cupertino Icons font to your application.

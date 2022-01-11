@@ -33,6 +33,8 @@ mixin GameFake on Loadable {
   /// This should render the game.
   void render(Canvas canvas);
 
+  void onMount() {}
+
   /// Just a reference back to the render box that is kept up to date by the
   /// engine.
   GameRenderBoxFake? _gameRenderBox;

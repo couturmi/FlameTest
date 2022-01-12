@@ -61,9 +61,9 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/flame"
-      ref: fix-game-resize
-      resolved-ref: f731a9d18763ad304f44cd0da3449a1f10fc511a
-      url: "https://github.com/mancj/flame.git"
+      ref: "ps/resize"
+      resolved-ref: "490357de2671013422d885dff7ff38db8fa4a366"
+      url: "https://github.com/st-pasha/flame.git"
     source: git
     version: "1.0.0"
   flutter:

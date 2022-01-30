@@ -61,8 +61,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/flame"
-      ref: "ps/resize"
-      resolved-ref: "490357de2671013422d885dff7ff38db8fa4a366"
+      ref: "ps/lifecycle"
+      resolved-ref: a1df06135be0ec747353890949af47eef8703371
       url: "https://github.com/st-pasha/flame.git"
     source: git
     version: "1.0.0"
